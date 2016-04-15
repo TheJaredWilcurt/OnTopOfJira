@@ -1,0 +1,43 @@
+{
+    "name": "on-top-of-jira",
+    "version": "1.0.0",
+    "license": "MIT",
+    "main": "app://on-top-of-jira/index.htm",
+    "engineStrict": true,
+    "engines": {
+        "npm": "^3.0.0"
+    },
+    "window": {
+        "title": "On Top of Jira",
+        "icon": "logo.png",
+        "toolbar": false,
+        "resizable": true,
+        "visible": true,
+        "transparent": false,
+        "width": 1025,
+        "height": 615,
+        "min_width": 100,
+        "min_height": 100,
+        "max_width": 8000,
+        "max_height": 8000,
+        "position": "center",
+        "always-on-top": true,
+        "show_in_taskbar": true,
+        "fullscreen": false,
+        "frame": true,
+        "as_desktop": false
+    },
+    "nodejs": true,
+    "user-agent": "%name %ver %nwver %webkit_ver %osinfo",
+    "webkit": {
+        "page-cache": true,
+        "java": false,
+        "plugin": true
+    },
+    "devDependencies": {
+        "nw": "^0.12.3"
+    },
+    "scripts": {
+        "start": "nw ."
+    }
+}

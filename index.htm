@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title class="applicationTitle">On Top of Jira</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            background: #F90;
+            overflow: hidden;
+        }
+        iframe {
+            position: absolute;
+            top: 30px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            height: calc(100% - 30px);
+            background: #FFF;
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+        }
+        #url {
+            width: calc(100% - 106px);
+            background: #CB7900;
+            border: 0px;
+            border-radius: 3px;
+            margin: 3px 0px 0px 5px;
+            padding: 4px 24px 6px 5px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+        #arrow {
+            position: absolute;
+            top: 4px;
+            right: 73px;
+            width: 22px;
+            height: 25px;
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            cursor: pointer;
+        }
+        #refresh,
+        #menu {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: #3B7FC4;
+            border-radius: 3px;
+            margin: 2px 0px 0px 2px;
+            padding: 0px;
+            color: #FFFFFF;
+            font-size: 19px;
+            -webkit-font-smoothing: antialiased;
+            line-height: 28px;
+            text-align: center;
+            text-rendering: optimizeLegibility;
+            cursor: pointer;
+            vertical-align: top;
+        }
+        #refresh:hover,
+        #menu:hover {
+            background: #4796E6;
+        }
+    </style>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script>
+        var win = require('nw.gui').Window.get();
+        function keyBindings() {
+            //Keyboard shortcuts
+            document.onkeydown = function (pressed) {
+                //Check `CTRL+F` key and do nothing :(
+                if ( pressed.ctrlKey && pressed.keyCode === 70 ) {
+                    pressed.preventDefault();
+                    console.info(º+"NW.js currently has no 'Find' feature built in. Sorry :(", consoleNormal);
+                    return false;
+                //Check `CTRL+F5`, `CTRL+R`, or `CMD+R` keys and hard refresh the page
+                } else if (
+                    pressed.ctrlKey && pressed.keyCode === 116 ||
+                    pressed.ctrlKey && pressed.keyCode === 82 ||
+                    pressed.metaKey && pressed.keyCode === 82 ) {
+                        pressed.preventDefault();
+                        win.reloadDev();
+                        return false;
+                //Check `Shift+F5` and `CMD+Shift+R` keys and refresh ignoring cache
+                } else if (
+                    pressed.shiftKey && pressed.keyCode === 116 ||
+                    pressed.metaKey && pressed.shiftKey && pressed.keyCode === 82 ) {
+                        pressed.preventDefault();
+                        win.reloadIgnoringCache();
+                        return false;
+                //Check `F5` key and soft refresh
+                } else if ( pressed.keyCode === 116 ) {
+                    pressed.preventDefault();
+                    win.reload();
+                    return false;
+                //Check `F12`, `Ctrl+Shift+I`, or `Option+Shift+I` and display Webkit Dev Tools
+                } else if (
+                    pressed.keyCode === 123 ||
+                    pressed.ctrlKey && pressed.shiftKey && pressed.keyCode === 73 ||
+                    pressed.altKey && pressed.shiftKey && pressed.keyCode === 73 ) {
+                        pressed.preventDefault();
+                        win.showDevTools();
+                        return false;
+                //If they typed return in the URL box
+                } else if ( $("#url").is(":focus") && pressed.keyCode === 13 ) {
+                    pressed.preventDefault();
+                    $("iframe").attr('src', $("#url").val() );
+                    return false;
+                }
+            };
+        }
+
+        $(document).ready(function () {
+            keyBindings();
+            $("#menu").click(function () {
+                win.showDevTools();
+            });
+            $("#refresh").click(function () {
+                win.reload();
+            });
+            $("#arrow").click(function () {
+                $("#iframe").attr('src', $("#url").val());
+            });
+            $("#iframe").load(function () {
+                $("#url").val( $("iframe").attr('src') );
+            });
+            $("#url").val( $("iframe").attr('src') );
+        });
+    </script>
+  </head>
+  <body>
+    <nav>
+        <input id="url" value="" type="text" />
+        <span id="arrow">&#10142;</span>
+        <span id="refresh">&#8634;</span>
+        <span id="menu">&#9776;</span>
+    </nav>
+    <iframe id="iframe" nwfaketop src="https://jira.exacttarget.com:8443/secure/RapidBoard.jspa?rapidView=1070&view=planning" frameborder=0></iframe>
+  </body>
+</html>

@@ -16,7 +16,7 @@
         "transparent": false,
         "width": 1025,
         "height": 615,
-        "min_width": 100,
+        "min_width": 300,
         "min_height": 100,
         "max_width": 8000,
         "max_height": 8000,
@@ -24,7 +24,7 @@
         "always-on-top": true,
         "show_in_taskbar": true,
         "fullscreen": false,
-        "frame": true,
+        "frame": false,
         "as_desktop": false
     },
     "nodejs": true,

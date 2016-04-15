@@ -15,6 +15,19 @@
             background: #F90;
             overflow: hidden;
         }
+        nav {
+            -webkit-app-region: drag;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        iframe,
+        #url,
+        #refresh,
+        #menu,
+        #close {
+            -webkit-app-region: no-drag
+        }
         iframe {
             position: absolute;
             top: 30px;
@@ -29,7 +42,7 @@
             padding: 0px;
         }
         #url {
-            width: calc(100% - 106px);
+            width: calc(100% - 216px);
             background: #CB7900;
             border: 0px;
             border-radius: 3px;
@@ -41,7 +54,7 @@
         #arrow {
             position: absolute;
             top: 4px;
-            right: 73px;
+            right: 155px;
             width: 22px;
             height: 25px;
             border-radius: 4px;
@@ -56,7 +69,7 @@
             height: 28px;
             background: #3B7FC4;
             border-radius: 3px;
-            margin: 2px 0px 0px 2px;
+            margin: 2px 2px 0px 2px;
             padding: 0px;
             color: #FFFFFF;
             font-size: 19px;
@@ -70,6 +83,29 @@
         #refresh:hover,
         #menu:hover {
             background: #4796E6;
+        }
+        #refresh {
+            float: left;
+        }
+        #menu,
+        #close {
+            float: right;
+        }
+        #close {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 0px;
+            border-radius: 4px;
+            margin: 2px 2px 0px 2px;
+            padding: 0px;
+            color: #FFF;
+            line-height: 28px;
+            text-align: center;
+            cursor: pointer;
+        }
+        #close:hover {
+            background-color: #F00;
         }
     </style>
     <script type="text/javascript" src="jquery.js"></script>
@@ -128,6 +164,9 @@
             $("#refresh").click(function () {
                 win.reload();
             });
+            $("#close").click(function () {
+                win.close();
+            });
             $("#arrow").click(function () {
                 $("#iframe").attr('src', $("#url").val());
             });
@@ -142,8 +181,9 @@
     <nav>
         <input id="url" value="" type="text" />
         <span id="arrow">&#10142;</span>
-        <span id="refresh">&#8634;</span>
+        <span id="close">&#10006;</span>
         <span id="menu">&#9776;</span>
+        <span id="refresh">&#8634;</span>
     </nav>
     <iframe id="iframe" nwfaketop src="https://jira.exacttarget.com:8443/secure/RapidBoard.jspa?rapidView=1070&view=planning" frameborder=0></iframe>
   </body>
